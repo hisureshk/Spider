@@ -5,3 +5,4 @@ To run the program find below the steps
 1. clone the git repo
 2. execute mvn package -DskipTests
 3. java -jar target\Spider-0.0.1-SNAPSHOT.jar  https://wiprodigital.com
+4. Output is generated in the sitemap.xml
