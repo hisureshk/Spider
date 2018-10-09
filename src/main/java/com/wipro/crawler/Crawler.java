@@ -15,12 +15,17 @@ import org.springframework.stereotype.Component;
 @Component
 public class Crawler {
 
+	private static final String XML_VERSION_ENCODING = "<?xml version='1.0' encoding='UTF-8'?>";
+	private static final String LOC = "<loc>";
+	private static final String LOC_CLOSE = "</loc>";
 	private static final String URL_CLOSE = "</url>";
 	private static final String NEWLINE = "\n";
 	private static final String URLSET = "<urlset>";
 	private static final String URLSET_CLOSE = "<urlset>";
 	private static final String URL = "<url>";
 	private static final String SITEMAP_XML = "sitemap.xml";
+	
+	
 	private Set<String> pagesVisited = new HashSet<String>();
 	private List<String> pagesToVisit = new LinkedList<String>();	
 	private String currentUrl;
@@ -86,10 +91,13 @@ public class Crawler {
 	private void writeToFile() throws IOException {
 		Iterator<String> iter = pagesVisited.iterator();
 		FileWriter fileWriter = new FileWriter(SITEMAP_XML);
+		fileWriter.append(XML_VERSION_ENCODING);
 		fileWriter.append(URLSET).append(NEWLINE);
 		while (iter.hasNext()) {
 			String next = iter.next();
-			fileWriter.append(URL).append(next).append(URL_CLOSE).append(NEWLINE);
+			fileWriter.append(URL).append(NEWLINE);
+			fileWriter.append(LOC).append(next).append(LOC_CLOSE).append(NEWLINE);
+			fileWriter.append(URL_CLOSE).append(NEWLINE);
 		}
 		fileWriter.append(URLSET_CLOSE).append(NEWLINE);
 		fileWriter.close();
